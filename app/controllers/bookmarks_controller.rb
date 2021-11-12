@@ -26,7 +26,6 @@ class BookmarksController < ApplicationController
     
     private   
     
-    # Only allow a trusted parameter "white list" through.
     def bookmark_params
       params.require(:bookmark).permit(:comment, :movie_id)
     end
