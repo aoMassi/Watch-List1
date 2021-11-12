@@ -5,17 +5,19 @@
  <div>
   <%= link_to 'add a bookmark', new_list_bookmark_path(@list), class: 'btn btn-primary  mb-5' %>
   <%= link_to 'detete this list', list_path(@list), method: :delete, class: 'btn btn-danger mb-5', data: { confirm: 'Are you sure you want to delete this list?' } %>
-  <%= link_to 'back to list', root_path %>
   </div>
   
   <% @list.bookmarks.each do  |bookmark|%> 
+        <% @list.movies.each do |movie| %>
     <div class="card m-t:2" style="width: 18rem;">
       <img src= "<%= bookmark.movie.poster_url%>" class="card-img-top" alt="...">
       <div class="card-body">
         <h4 class="card-title"><%=bookmark.movie.title %></h4>
         <p class="card-text"><%=bookmark.movie.overview %></p>
         <p class="card-text">Rating: <%=bookmark.movie.rating %></p>
-        <a href="#" class="btn btn-danger">Delete</a>
+        <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+        <%= link_to 'delete', bookmark_path(bookmark), method: :delete,  data: { confirm: "Are you sure you want to remove #{movie.title} from your #{@list.name} list"}, class: 'btn btn-danger mb-2' %>
+           <%end %>
       </div>
    </div>
  <%end %>
